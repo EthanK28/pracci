@@ -31,13 +31,17 @@ class Topic extends CI_Controller {
         $this->_head();
 
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('title', '제목', 'required');
+        $this->form_validation->set_rules('description', '본문', 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->load->view('add');
         }
         else
         {
-            echo "성공";
+            $topic_id = $this ->topic_model -> add($this->input->post('title'), $this->input->post('description'));
+            $this -> load -> helper('url');
+            redirect('/topic/get/'.$topic_id);
         }
 
 
