@@ -18,12 +18,18 @@ class Topic extends CI_Controller {
     }
 
     function get($id){
+        log_message('debug', 'get 호출');
         $this->_head();
 
         $topic = $this ->topic_model->get($id);
+        if(empty($topic)){
+            log_message('error', 'topic의 값이 없습니다.');
+            show_error('topic의 값이 없습니다.');
+        }
         $this->load ->helper(array('url', 'HTML', 'korean'));
+        log_message('debug', 'view 로딩');
         $this -> load -> view('get', array('topic'=>$topic));
-
+        log_message('debug', 'footer view 로딩');
         $this ->load -> view('footer');
     }
 
@@ -31,21 +37,63 @@ class Topic extends CI_Controller {
         $this->_head();
 
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('title', '제목', 'required');
+        $this->form_validation->set_rules('description', '본문', 'required');
         if ($this->form_validation->run() == FALSE)
         {
             $this->load->view('add');
         }
         else
         {
+            $topic_id = $this->topic_model->add($this->input->post('title'), $this->input->post('description'));
+            $this->load->helper('url');
             echo "성공";
+            redirect('http://localhost/ci/index.php/topic/get/'.$topic_id);
         }
 
-
-
-        $this ->load -> view('footer');
+        $this->load->view('footer');
     }
 
+    function upload_receive(){
+        // 사용자가 업로드 한 파일을 /static/user/ 디렉토리에 저장한다.
+        $config['upload_path'] = './static/user';
+        // git,jpg,png 파일만 업로드를 허용한다.
+        $config['allowed_types'] = 'gif|jpg|png';
+        // 허용되는 파일의 최대 사이즈
+        $config['max_size'] = '2048';
+        // 이미지인 경우 허용되는 최대 폭
+        $config['max_width']  = '2048';
+        // 이미지인 경우 허용되는 최대 높이
+        $config['max_height']  = '2048';
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload("user_upload_file"))
+        {
+            //$error = array('error' => $this->upload->display_errors());
+            echo $this->upload->display_errors();
+            //$this->load->view('upload_form', $error);
+
+        }
+        else
+        {
+            $data = array('upload_data' => $this->upload->data());
+
+            //$this->load->view('upload_success', $data);
+            echo "성공";
+            var_dump($data);
+        }
+
+    }
+
+    function upload_form(){
+        $this -> _head();
+        $this -> load -> view('upload_form');
+        $this -> load -> view('footer');
+    }
+
+
     function _head() {
+        $this -> load ->config('opentutorials');
         $this ->load -> view('head');
         $topics = $this -> topic_model ->gets();
         $this -> load -> view('topic_list', array('topics'=>$topics));

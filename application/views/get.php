@@ -8,7 +8,10 @@
                 </div>
         </article>
         <div>
-                <a href="/ci/index.php/topic/add" class="btn btn-default">추가</a>
+                <?php var_dump(base_url());?>
+                <?php var_dump(index_page());?>
+                <a href="<?php echo base_url("/ci/index.php/topic/add");?>" class="btn btn-default">추가</a>
         </div>
 
 </div>
+

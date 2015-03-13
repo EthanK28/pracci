@@ -38,6 +38,15 @@
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
+    <?php
+    if($this->config->item('is_dev')){
+    ?>
+    <div class="well col-md-12">
+        개발환경을 수정중입니다.
+    </div>
+    <?php
+    }
+    ?>
     <div class="container-fluid">
         <div class="row">
 
