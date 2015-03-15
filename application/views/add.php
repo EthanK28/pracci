@@ -7,5 +7,7 @@
 </form>
 <script src="/ci/static/lib/ckeditor/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace('description');
+    CKEDITOR.replace('description', {
+    	filebrowserUploadUrl: '/topic/upload'
+    });
 </script>
