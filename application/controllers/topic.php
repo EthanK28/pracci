@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Topic extends CI_Controller {
+class Topic extends MY_Controller {
 
     function __construct(){
         parent::__construct();
@@ -11,15 +11,17 @@ class Topic extends CI_Controller {
     function index(){
 
         $this->_head();
+        $this->_sidebar();
 
         $this -> load -> view('main');
 
-        $this ->load -> view('footer');
+        $this->_footer();
     }
 
     function get($id){
         log_message('debug', 'get 호출');
         $this->_head();
+        $this->_sidebar();
 
         $topic = $this ->topic_model->get($id);
         if(empty($topic)){
@@ -30,11 +32,20 @@ class Topic extends CI_Controller {
         log_message('debug', 'view 로딩');
         $this -> load -> view('get', array('topic'=>$topic));
         log_message('debug', 'footer view 로딩');
-        $this ->load -> view('footer');
+        $this->_footer();
     }
 
     function add(){
+        // 로그인 필요
+
+        // 로그인이 되어 있지 않다면 로그인 페이지로 리다이렉션
+        if(!$this->session->userdata('is_login')){
+            $this->load->helper('url');
+            redirect('http://localhost/ci/index.php/auth/login');
+        }
+
         $this->_head();
+        $this->_sidebar();
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules('title', '제목', 'required');
@@ -51,7 +62,7 @@ class Topic extends CI_Controller {
             redirect('http://localhost/ci/index.php/topic/get/'.$topic_id);
         }
 
-        $this->load->view('footer');
+        $this->_footer();
     }
 
     function upload_receive(){
@@ -114,6 +125,7 @@ class Topic extends CI_Controller {
             $filename = $data['file_name'];
             $url = '/static/user'.$filename;
 
+
             echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction('".$CKEditorFuncNum."', '".$url."', '전송에 성공했습니다.')
                     </script>";
         }
@@ -123,18 +135,13 @@ class Topic extends CI_Controller {
 
     function upload_form(){
         $this -> _head();
+        $this->_sidebar();
         $this -> load -> view('upload_form');
-        $this -> load -> view('footer');
+        $this ->_footer();
     }
 
 
-    function _head() {
-        $this -> load ->config('opentutorials');
-        $this ->load -> view('head');
-        $topics = $this -> topic_model ->gets();
-        $this -> load -> view('topic_list', array('topics'=>$topics));
 
-    }
 }
 
 

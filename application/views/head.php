@@ -25,6 +25,18 @@
             </style>
         </head>
     <body>
+    <?php
+    if($this->session->flashdata('message')){
+
+    ?>
+        <script>
+            alert('<?=$this->session->flashdata('message')?>');
+        </script>
+    <?php
+
+    }?>
+
+
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -38,8 +50,21 @@
                 <a class="navbar-brand" href="#">JavaScript</a>
             </div>
 
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <?php
+                        if($this->session->userdata('is_login')){
+                    ?>
+                        <li><a href="/ci/index.php/auth/logout">로그아웃</a></li>
+                    <?php
+                        } else {
+                    ?>
 
-
+                    <li><a href="/ci/index.php/auth/login">로그인</a></li>
+                    <?php
+                        }
+                    ?>
+                </ul>
 
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
