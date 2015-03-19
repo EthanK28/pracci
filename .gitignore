@@ -1,5 +1,6 @@
 .DS_Store
-
+/application/config/database.php
+/application/config/config.php
 application/cache/*
 !application/cache/index.html
 !application/cache/.htaccess
@@ -7,5 +8,3 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
-
-.idea/workspace.xml

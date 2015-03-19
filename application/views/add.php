@@ -1,11 +1,15 @@
-
-<?php echo validation_errors(); ?>
-<form method="post" action="/ci/index.php/topic/add" class="col-md-10">
-    <div class="form-group">
-        <input type="text" name="title" placeholder="제목" class="col-xs-12"/>
+<form class="col-md-10" method="post" action="/ci/index.php/topic/add">
+    <?php echo validation_errors(); ?>
+    제목 : <input type="text" name="title"/>
+    본문 :
+    <textarea name="description"></textarea>
+    <div class="form-control">
+    <input type="submit"/>
     </div>
-    <div class="form-group">
-        <textarea name="description" placeholder="본문" rows="15" class="col-xs-12"></textarea>
-    </div>
-    <input type="submit" class="btn btn-default"/>
 </form>
+<script src="/ci/static/lib/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('description', {
+    	filebrowserUploadUrl: '/ci/index.php/topic/upload_receive_from_ck'
+    });
+</script>

@@ -18,16 +18,12 @@
         }
 
         function add($title, $description){
-            $this -> db ->set('created', 'NOW()', false);
-            $this->db->insert('topic', array(
+            $this->db->set('created', 'NOW()', false);
+            $this->db->insert('topic',array(
                 'title'=>$title,
-                'description'=>$description,
-
+                'description'=>$description
             ));
-
-            return $this -> db ->insert_id();
-
-
+            return $this->db->insert_id();
         }
 
     }
