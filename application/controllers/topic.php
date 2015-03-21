@@ -39,9 +39,10 @@ class Topic extends MY_Controller {
         // 로그인 필요
 
         // 로그인이 되어 있지 않다면 로그인 페이지로 리다이렉션
+
         if(!$this->session->userdata('is_login')){
             $this->load->helper('url');
-            redirect('http://localhost/ci/index.php/auth/login');
+            redirect('http://localhost/ci/index.php/auth/login?returnURL='.rawurlencode(site_url('/topic/add')));
         }
 
         $this->_head();

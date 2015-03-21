@@ -10,3 +10,5 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 
+static/user/Slam_Dunk_16_0532.jpg
+static/user/Slam_Dunk_16_0531.jpg
