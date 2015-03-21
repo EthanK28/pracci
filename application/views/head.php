@@ -47,7 +47,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">JavaScript</a>
+                <a class="navbar-brand" href="/ci/index.php">JavaScript</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -59,8 +59,8 @@
                     <?php
                         } else {
                     ?>
-
                     <li><a href="/ci/index.php/auth/login">로그인</a></li>
+                    <li><a href="/ci/index.php/auth/register">회원가입</a></li>
                     <?php
                         }
                     ?>
